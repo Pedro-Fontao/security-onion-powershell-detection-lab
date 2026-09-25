@@ -494,6 +494,26 @@ This rule is intentionally behavioral. It does not depend on the specific lab fi
 
 That makes the detection more reusable than a rule tied only to one known test artifact.
 
+### Detection Considerations
+
+This rule was configured as **High severity for controlled lab validation**. In a production environment, the behavior should not be treated as standalone proof of malicious activity.
+
+Process-scoped execution-policy changes and PowerShell execution from user-writable directories can also occur during legitimate administrative or user activity. A production deployment would therefore require tuning and additional context before determining severity.
+
+Useful contextual factors include:
+
+- parent process and execution origin
+- user and account context
+- script location and provenance
+- PowerShell command line
+- file hashes and signing state
+- preceding download activity
+- child-process behavior
+- subsequent network connections
+- similar activity on other endpoints
+
+The rule is intended to provide a **behavioral investigation signal** that becomes more meaningful when correlated with surrounding endpoint and network telemetry.
+
 ---
 
 ## Phase 11 — Controlled Detection Validation
