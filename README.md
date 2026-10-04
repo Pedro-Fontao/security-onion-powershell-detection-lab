@@ -754,4 +754,15 @@ Examples of supporting evidence include:
 
 # What I Learned
 
+-I learned how to verify that a file observed in network traffic is the same file that exists on the endpoint. By comparing the hashes Zeek generated from the HTTP transfer with the hashes calculated locally on Windows, I was able to directly link the network evidence to the downloaded file instead of just assuming they were the same.
+
+-I learned how much stronger an investigation becomes when multiple telemetry sources are correlated together. Elastic Endpoint showed the process activity, Zeek showed the HTTP and file transfer details, and Suricata provided network alerts. Looking at all of them together gave a much clearer picture of what happened than any single source could provide on its own.
+
+-I learned the difference between having telemetry and actually having detection coverage. Security Onion already contained evidence of the PowerShell execution-policy bypass, but there was no dedicated alert for that behavior. This showed me that suspicious activity can be visible in logs without necessarily being detected automatically.
+
+-I learned how to reconstruct a full sequence of activity from execution to network communication. By following the process tree, file creation events, and HTTP callback, I was able to connect `explorer.exe → powershell.exe → whoami.exe / cmd.exe` with the files that were created and the outbound network connection that followed.
+
+-I learned that detection engineering does not stop after writing a rule. After creating the Sigma rule, I tested it with controlled activity, checked whether it generated the expected alert, and considered possible false positives. I learned that a useful detection needs to be validated and tuned, because suspicious-looking behavior can sometimes also have legitimate explanations.
+
+-I learned that a SOC investigation is not finished when you understand the technical findings. Documenting observables, building a timeline, recording recommendations, assigning a disposition, and closing the case are also part of the analyst workflow.
 
